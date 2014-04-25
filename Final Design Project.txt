@@ -1,0 +1,709 @@
+--Dropping all of the tables--
+
+drop table if exists Doctors_Companions;
+drop table if exists Doctors_Villains;
+drop table if exists Planets_Visited;
+drop table if exists Home_Planet;
+drop table if exists Villains;
+drop table if exists Doctors;
+drop table if exists Companions;
+drop table if exists Species;
+drop table if exists Planets;
+
+--This is the creation of the Doctors table
+create table Doctors
+(
+DiD              serial  not null  primary key,
+num              int     not null,
+height_in        int     not null  default 0.0  check (height_in > 0),
+weight_lbs       int     not null  default 0.0  check (weight_lbs > 0),
+Signature_look   text    not null,
+bio              text
+); 
+
+--This is the creation of the Companions table
+create table Companions
+(
+CiD              serial  not null  primary key,
+name             text    not null,
+height_in        int     not null  default 0.0  check (height_in > 0),
+weight_lbs       int     not null  default 0.0  check (weight_lbs > 0),
+bio              text
+); 
+
+--This is the creation of the Species table
+create table Species
+(
+SiD         serial  not null   primary key, 
+name        text    not null,
+bio         text
+);
+
+--This is the creation of the Planets table
+create table Planets
+(
+PiD        serial  not null  primary key,
+name       text    not null,
+size       text    not null check (size = 'small' or size = 'medium' or size = 'large' or size = 'super giant'),
+bio        text 
+);
+
+--This is the creation of the Villains table
+create table Villains
+(
+ViD         serial   not null  primary key,
+name        text     not null,
+height_in   int      not null  default 0.0  check (height_in > 0),
+weight_lbs  int      not null  default 0.0  check (weight_lbs > 0),
+SiD         int     not null  references Species(SiD),
+bio         text
+);
+
+--This is the creation of the Home Planet table
+create table Home_Planet
+(
+SiD    serial  not null  references Species(SiD),
+PiD    serial  not null  references Planets(PiD)
+);
+
+--This is the creation of the Doctor's Companion table
+create table Doctors_Companions
+(
+DiD     serial  not null  references Doctors(DiD),
+CiD     serial  not null  references Companions(CiD)
+);
+
+--This is the creation of the Doctor's Villains table
+create table Doctors_Villains
+(
+DiD       serial  not null  references Doctors(DiD),
+ViD       serial  not null  references Villains(ViD)
+);
+
+--This is the creation of the Planet's Visited table
+create table Planets_Visited
+(
+DiD       serial  not null  references Doctors(DiD),
+PiD       serial  not null  references Planets(PiD),
+CiD       serial  not null  references Companions(CiD)
+);
+
+
+--Inserting data into the Doctors table
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('1', '68', '140', 'Karakul', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('2', '67', '168', 'Playing Recorder', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('3', '75', '185', 'frilled shirt', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('4', '75', '212', 'multi-coloured scarf', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('5', '72', '155', 'Celery Stalk', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('6', '72', '193', 'Patchwork frock coat', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('7', '66', '213', 'Question Mark Umbrella', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('8', '68', '194', 'Ascot tie', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('9', '72', '198', 'Leather Jacket', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('10', '73', '176', 'Pin Stripped Suit', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('11', '71', '154', 'Bow-Tie', 'Information on Doctor here');
+
+insert into Doctors(num, height_in, weight_lbs, Signature_look, bio)
+	values ('12', '161', '1200', 'Red Lined Jacket', 'Information on Doctor here');
+
+
+--Inserting data into the Companions table
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Susan Foreman', '65', '145', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Polly', '67', '150', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Sarah Jane Smith', '67', '130', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('K-9', '47', '50', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Romana', '72', '160', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Peri Brown', '64', '128', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Ace', '62', '120', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Grace Holloway', '71', '173', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Rose Tyler', '63', '119', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Captain Jack Harkness', '72', '217', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Martha Jones', '65', '120', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Donna Noble', '66', '180', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Wilfred', '67', '190', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Amy Pond', '71', '125', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Rory Williams', '71', '169', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('River Song', '67', '156', 'Information on Person here');
+
+insert into Companions(name, height_in, weight_lbs, bio)
+	values ('Clara Oswald', '62', '110', 'Information on Person here');
+
+
+--Inserting data into the Species table
+insert into Species(name, bio)
+	values ('Human', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Daleks', 'Information on Species heres');
+
+insert into Species(name, bio)
+	values ('Timelords', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Cyberman', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Ood', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Adipose', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Sontaran', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Raxacoricofallapatorian', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Shadow', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('The Silence', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Statues', 'Information on Species here');
+
+insert into Species(name, bio)
+	values ('Judoon', 'Information on Species here');
+
+
+--Inserting data into the Planets Table
+insert into Planets(name, size, bio)
+	values ('Gallifrey', 'large', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Apalapucia', 'super giant', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Skaro', 'large', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('San Kaloon', 'medium', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Earth', 'small', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('New Earth', 'small', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Raxacoricofallapatorius', 'large', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Utopia', 'small', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Sontar', 'super giant', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('House', 'small', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Adipose 3', 'medium', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Metebelis Three', 'large', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Ood Sphere', 'medium', 'Information on Planet here');
+
+insert into Planets(name, size, bio)
+	values ('Mondas', 'medium', 'Information on Planet here');
+
+--Inserting data into the Villains table
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('Daleks', '63', '350', '2', 'Information on Person here');
+
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('Cyberman', '77', '288', '4', 'Information on Person here');
+
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('Master', '70', '164', '3', 'Information on Person here');
+
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('Davros', '68', '197', '2', 'Information on Person here');
+
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('The Silence', '80', '113', '10', 'Information on Person here');
+
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('Weeping Angels', '72', '300', '11', 'Information on Person here');
+
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('Vashta Nerada', '69', '180', '9', 'Information on Person here');
+
+insert into Villains(name, height_in, weight_lbs, SiD, bio)
+	values ('Slitheen', '84', '389', '8', 'Information on Person here');
+
+--Inserting data into the Home_planet Table
+insert into Home_Planet(SiD, PiD)
+	values ('1', '5');
+
+insert into Home_Planet(SiD, PiD)
+	values ('2', '3');
+
+insert into Home_Planet(SiD, PiD)
+	values ('3', '1');
+
+insert into Home_Planet(SiD, PiD)
+	values ('5', '13');
+
+insert into Home_Planet(SiD, PiD)
+	values ('6', '11');
+
+insert into Home_Planet(SiD, PiD)
+	values ('7', '9');
+
+insert into Home_Planet(SiD, PiD)
+	values ('8', '7');
+
+insert into Home_Planet(SiD, PiD)
+	values ('9', '4');
+
+insert into Home_Planet(SiD, PiD)
+	values ('11', '5');
+
+--Inserting data into the Doctors_Companions Table
+insert into Doctors_Companions(DiD, CiD)
+	values ('1','1');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('1','2');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('2','2');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('3','3');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('4','3');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('4','4');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('4','5');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('5','6');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('6','6');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('7','7');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('8','8');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('9','9');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('9','10');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('10','9');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('10','10');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('10','11');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('10','12');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('10','13');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('11','14');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('11','15');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('11','16');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('11','17');
+
+insert into Doctors_Companions(DiD, CiD)
+	values ('12','17');
+
+
+--Inserting data into Doctors_Villains Table----
+insert into Doctors_Villains(DiD,ViD)
+	values ('1', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('1', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('2', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('2', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('3', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('3', '3');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('4', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('4', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('4', '3');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('4', '4');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('5', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('5', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('5', '3');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('5', '4');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('6', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('6', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('6', '3');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('6', '4');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('7', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('7', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('7', '3');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('7', '4');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('8', '3');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('9', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('9', '8');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('10', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('10', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('10', '3');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('10', '4');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('10', '6');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('10', '7');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('11', '1');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('11', '2');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('11', '5');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('11', '6');
+
+insert into Doctors_Villains(DiD,ViD)
+	values ('12', '3');
+
+--Inserting data into the Planets_Visited Table
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('1', '1', '2');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('1', '5', '1');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('2', '1', '2');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('2', '5', '2');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('2', '14', '2');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('3', '1', '3');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('3', '5', '3');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('3', '4', '3');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('4', '3', '5');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('4', '5', '3');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('4', '9', '4');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('5', '4', '6');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('5', '5', '6');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('5', '12', '6');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('6', '3', '6');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('6', '5', '6');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('6', '12', '6');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('7', '1', '7');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('7', '5', '7');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('7', '13', '7');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('8', '5', '8');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('8', '6', '8');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('8', '11', '8');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('9', '1', '9');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('9', '5', '10');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('9', '7', '9');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('10', '1', '11');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('10', '5', '13');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('10', '6', '9');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('10', '8', '12');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('11', '2', '15');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('11', '5', '16');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('11', '10', '14');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('12', '5', '17');
+
+insert into Planets_Visited(DiD, PiD, CiD)
+	values ('12', '13', '17');
+
+Select *
+From Doctors
+
+Select *
+From Companions
+
+
+Select * 
+From Species
+
+Select * 
+From Planets
+
+Select *
+From Villains
+
+Select * 
+From Home_Planet
+
+Select *
+From Doctors_Companions
+
+Select * 
+From Doctors_Villains
+
+Select * 
+From Planets_Visited
+
+select species.name 
+	from Species, Villains 
+	where species.SiD = Villains.ViD
+	and Villains.name = 'Master' 
+
+select planets.name 
+	from planets, home_planet, species, Villains 
+	where planets.PiD = Home_Planet.PiD
+        and Home_Planet.SiD = Species.SiD
+ 	and species.SiD = Villains.SiD 
+ 	and Villains.name = 'Slitheen'
+
+
+
+Drop View if exists Old_Who;
+create view Old_Who as
+SELECT Doctors.num as Doctors_Appeared,
+Doctors.signature_look as Signature_look,
+Doctors.Bio as Doctors_Bio,
+Companions.name as Companions,
+Companions.bio as Companions_Bio,
+Villains.name as Villains,
+Villains.bio as Villains_Bio
+FROM Doctors, Companions, Villains, Doctors_Villains, Doctors_Companions
+WHERE Doctors.DiD <= 8 
+and   Companions.CiD <= 8
+and   Doctors_Villains.DiD <= 8 
+and   Companions.CiD = Doctors_Companions.CiD
+and   Doctors_Companions.DiD = Doctors.DiD
+and   Doctors.DiD = Doctors_Villains.DiD
+and   Doctors_Villains.ViD = Villains.ViD
+
+Select *
+From Old_Who
+
+Drop View if exists New_Who;
+create view New_Who as
+SELECT Doctors.num as Doctors_Appeared,
+Doctors.signature_look as Signature_look,
+Doctors.Bio as Doctors_Bio,
+Companions.name as Companions,
+Companions.bio as Companions_Bio,
+Villains.name as Villains,
+Villains.bio as Villains_Bio
+FROM Doctors, Companions, Villains, Doctors_Villains, Doctors_Companions
+WHERE Doctors.DiD > 8 
+and   Companions.CiD > 8
+and   Doctors_Villains.DiD > 8 
+and   Companions.CiD = Doctors_Companions.CiD
+and   Doctors_Companions.DiD = Doctors.DiD
+and   Doctors.DiD = Doctors_Villains.DiD
+and   Doctors_Villains.ViD = Villains.ViD
+
+Select *
+From New_Who
+
+DROP FUNCTION IF EXISTS Specific_Species(Species_name text);
+CREATE OR REPLACE FUNCTION Specific_Species(Species_name text)
+RETURNS TABLE("Species Name" text, "Person Name" text) as $$
+BEGIN 
+RETURN QUERY SELECT s.name AS "Species Name", v.name AS "Person Name"
+FROM Species s, Villains v, Doctors d, Companions c, Doctors_Villains dv, Doctors_Companions dc
+WHERE s.SiD = v.SiD
+  AND v.ViD = dv.DiD
+  AND dv.DiD = d.DiD
+  AND d.DiD = dc.CiD
+  AND dc.CiD = c.CiD
+  AND s.name = Species_name;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT Specific_Species('Daleks');
+
+
+
+
+
+
+
